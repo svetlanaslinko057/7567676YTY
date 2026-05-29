@@ -1,0 +1,23 @@
+{
+  "summary": "Frontend-only verification of redesigned AdminLegalSettings.js (Tailwind + design tokens). Login as admin@atlas.dev → /api/web-ui/admin/legal-settings rendered correctly. ALL critical acceptance criteria PASSED: (1) Horizontal padding pl=50px / pr=50px exactly, py=40px top + pb=80px bottom; (2) Header title 'Legal & social' renders dark (rgb 26,23,20) on light bg (rgb 250,248,244) and light (rgb 235,234,229) on dark bg (rgb 15,15,17) — NO white-on-white anywhere; (3) Save disabled at load, becomes enabled the moment a toggle/text changes, 'Unsaved changes' amber indicator appears; (4) All 6 social cards (telegram/tiktok/instagram/youtube/facebook/github) render with toggle+url+brand-dot+hint, custom peer-checkbox toggle truly flips state; (5) URL validation: typing 'invalid' into enabled URL shows red border (rgb 244,63,94 = rose-500) + inline error 'URL must start with http:// or https://'; error disappears after typing valid URL; (6) Three tabs (terms/privacy/cookies) all present and switchable, body+title fields editable, word counter updates ('4 words · 24 chars'); (7) Save button → PUT succeeds, 'Saved' toast appears, 'All changes saved' muted indicator shown, Save disabled again; (8) Reload button present; (9) Cookie stats section renders with legal-stat-{all,essential,rejected}; (10) Dark theme (atlas_theme=dark) properly inverts all colors via design tokens, both themes fully readable; (11) RBAC works — client@atlas.dev cannot reach /admin/legal-settings (redirected to /client/dashboard). Note: localStorage key for theme is 'atlas_theme' (not 'theme' as test request implied) but this is a global ThemeContext concern, not an AdminLegalSettings issue.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [],
+    "react_native_issues": []
+  },
+  "test_report_links": ["/app/test_reports/iteration_17.json"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "AdminLegalSettings.js (~437 LOC) is borderline of the 700-LOC threshold — still acceptable but could be split into SocialCard / LegalDocumentEditor / CookieStats sub-components if it grows further.",
+    "Note: review_request mentioned localStorage key 'theme' for theme switching, but actual key is 'atlas_theme' (defined in /app/web/src/theme/tokens.js THEME_STORAGE_KEY). Both light & dark applied correctly through the global ThemeContext."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a (frontend-only request)", "frontend": "100%"},
+  "seed_data_creation": "None — used existing legal-settings document. After save the youtube social was toggled & cleared, facebook enabled with https://facebook.com/atlas_test, privacy body briefly overwritten with 'Hello world test counter' to verify word counter. PUT call succeeded (Saved toast confirmed).",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Web app served under /api/web-ui/ via FastAPI StaticFiles. Backend at https://react-native-build-23.preview.emergentagent.com/api. Admin login: admin@atlas.dev/admin123 → cookie session_token. Theme storage key is 'atlas_theme' ('light'|'dark'). Page path: /api/web-ui/admin/legal-settings. All testIDs verified: admin-legal-settings, legal-save, legal-reload, legal-social-{key}-toggle/url, legal-doc-tab-{kind}, legal-doc-{kind}-title/body, legal-stat-{all,essential,rejected}.",
+  "rca_of_issue": "n/a — no failures detected."
+}

@@ -1,0 +1,43 @@
+{
+  "summary": "Backend testing of extended Portfolio feature (deep-case fields + inquiry CRUD + admin routing fix). 26/27 tests passed (96%). Routing fix VERIFIED: /api/admin/portfolio/inquiries (GET/PATCH/DELETE) no longer shadowed by /{case_id} and works correctly. Public list/detail/featured + enrichment of 5 seeded cases verified. Public inquiry creation across all 3 intents (order_similar, consultation, calculate) works including null case_id. Admin PATCH (status transitions new\u2192contacted\u2192qualified\u2192converted\u2192closed, invalid status \u2192 400, internal_notes) and DELETE work. /api/admin/portfolio/{case_id} GET + PATCH (published, featured, title toggles) still works after reorder. Auth gating correct: public endpoints open, admin endpoints reject anon (401) and non-admin client (403). ONE FAILURE: POST /api/portfolio/inquiry silently coerces invalid intent to 'order_similar' instead of returning 400 as spec requires.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {
+        "endpoint": "POST /api/portfolio/inquiry",
+        "issue": "Invalid `intent` values are silently coerced to 'order_similar' instead of being rejected with HTTP 400. Spec explicitly requires rejection. Reference: server.py:6897-6899 (`if intent not in (...): intent = 'order_similar'`). Recommended fix: raise HTTPException(400, detail='Invalid intent') when intent is provided but not in the allowed set."
+      }
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [],
+    "react_native_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_portfolio_extension.py",
+    "/app/test_reports/pytest/portfolio_extension.xml"
+  ],
+  "action_items": [
+    "Fix /api/portfolio/inquiry intent validation in /app/backend/server.py around lines 6897-6899 \u2014 raise HTTPException(400, 'Invalid intent') when payload['intent'] is provided but not in {'order_similar','consultation','calculate'} (currently silently coerced to 'order_similar')."
+  ],
+  "critical_code_review_comments": [
+    "server.py is ~27,878 lines \u2014 well over the 700-line guideline. Strongly recommend splitting per-domain (portfolio, money, payouts, validation, auth) into routers. Not part of this iteration's scope but flagging as long-standing tech debt.",
+    "POST /api/portfolio/inquiry uses `dict = Body(...)` instead of a Pydantic input model. Switching to a Pydantic `PortfolioInquiryCreate` model would catch invalid intents at validation time (422) for free and removes ~25 lines of manual validation.",
+    "PATCH /api/admin/portfolio/inquiries/{inquiry_id} validates status well (returns 400 on bad value) \u2014 mirrors the same approach that the POST /portfolio/inquiry endpoint is missing.",
+    "Routing fix is correct: the 3 /admin/portfolio/inquiries handlers are now defined ABOVE /admin/portfolio/{case_id} (server.py lines 6691, 6713, 6747 vs 6759). Comment at line 6687-6690 explains the precedence rationale \u2014 good practice."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_portfolio_extension.py (new file)"
+  ],
+  "success_rate": {
+    "backend": "96% (26/27)",
+    "frontend": "not tested (per request)"
+  },
+  "seed_data_creation": "Tests create several TEST_-prefixed portfolio inquiries (full_name starts with TEST_, emails like TEST_*@example.com). Tests are non-destructive on the 5 seeded portfolio_cases (PATCH toggles are reverted at the end). Test_delete_inquiry cleans up its own row.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Use _login() helper in test_portfolio_extension.py to handle the Secure-flagged session_token cookie when testing over http://localhost:8001. The backend issues `SameSite=none; Secure` cookies which the `requests` library will NOT re-send over plain HTTP \u2014 you must extract the token from Set-Cookie and re-register without the Secure flag (or test via the https preview URL).",
+  "rca_of_issue": "RCA for the single failing test (invalid intent not rejected): In /app/backend/server.py at line 6897-6899, the inquiry endpoint reads `intent = str(payload.get('intent','')).strip(); if intent not in ('order_similar','consultation','calculate'): intent = 'order_similar'`. This silently rewrites bad input. The review_request explicitly states 'POST /api/portfolio/inquiry \u2014 rejects invalid intent with 400'. Reproduction: `curl -X POST http://localhost:8001/api/portfolio/inquiry -H 'Content-Type: application/json' -d '{\"intent\":\"bogus\",\"full_name\":\"x\",\"email\":\"a@b.com\",\"message\":\"hi\"}'` returns 200 with intent='order_similar' in the response. Mitigation: replace the silent coercion with `raise HTTPException(400, detail='Invalid intent')`."
+}
