@@ -76,7 +76,7 @@ const ClientScreenMock = ({ C }) => (
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ fontSize: 11, color: C.text1, fontWeight: 600 }}>{tByEn('Acme Analytics')}</div>
+        <div style={{ fontSize: 11, color: C.text1, fontWeight: 600 }}>Acme Analytics</div>
         <Pill C={C} dot="#22C55E" label="On track" />
       </div>
       <Bar C={C} pct={62} />
@@ -92,7 +92,7 @@ const ClientScreenMock = ({ C }) => (
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ fontSize: 11, color: C.text1, fontWeight: 600 }}>{tByEn('Helios CRM')}</div>
+        <div style={{ fontSize: 11, color: C.text1, fontWeight: 600 }}>Helios CRM</div>
         <Pill C={C} dot="#D4A574" label="Watching" />
       </div>
       <Bar C={C} pct={28} />

@@ -55,7 +55,7 @@ class RootErrorBoundary extends Component {
                 <WifiOff className="w-7 h-7 text-red-400" />
               </div>
               <div>
-                <h2 className="text-xl font-semibold mb-1">{tByEn('Something went wrong')}</h2>
+                <h2 className="text-xl font-semibold mb-1">Something went wrong</h2>
                 <p className="text-sm text-muted-foreground">
                   The page crashed unexpectedly. The error has been logged.
                 </p>
