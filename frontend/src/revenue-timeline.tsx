@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import api from './api';
-import T from './theme';
+import T, { alpha } from './theme';
 
 // Wave 10 — Revenue Timeline block
 // Shows: current spend · next expected payment · open opportunity value · retainer offer · LTV estimate · segment
@@ -34,7 +34,7 @@ export default function RevenueTimeline() {
     <View style={s.wrap} testID="revenue-timeline">
       <View style={s.headRow}>
         <Text style={s.title}>Revenue path</Text>
-        <View style={[s.segPill, { borderColor: seg.color + '88', backgroundColor: seg.color + '15' }]}>
+        <View style={[s.segPill, { borderColor: alpha(seg.color, 0.53), backgroundColor: alpha(seg.color, 0.08) }]}>
           <Ionicons name={seg.icon as any} size={11} color={seg.color} />
           <Text style={[s.segText, { color: seg.color }]}>{seg.label}</Text>
         </View>

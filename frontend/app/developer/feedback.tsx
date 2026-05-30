@@ -14,7 +14,7 @@ import {
 import { useRouter, Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { runtime } from '../../src/runtime';
-import T from '../../src/theme';
+import T, { alpha } from '../../src/theme';
 
 type Item = {
   module_id: string;
@@ -159,7 +159,7 @@ export default function DeveloperFeedback() {
 function SumCard({ label, value, tone }: { label: string; value: number; tone: 'warn' | 'ok' }) {
   const c = tone === 'ok' ? T.success : T.risk;
   return (
-    <View style={[s.sumCard, { borderColor: c + '55' }]}>
+    <View style={[s.sumCard, { borderColor: alpha(c, 0.33) }]}>
       <Text style={s.sumLabel}>{label}</Text>
       <Text style={[s.sumValue, { color: c }]}>{value}</Text>
     </View>
@@ -173,7 +173,7 @@ function FeedbackCard({ item }: { item: Item }) {
     : T.success;
   return (
     <View
-      style={[s.card, { borderColor: color + '55' }]}
+      style={[s.card, { borderColor: alpha(color, 0.33) }]}
       testID={`feedback-card-${item.module_id}`}
     >
       <View style={s.cardHead}>

@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import api from './api';
-import T from './theme';
+import T, { alpha } from './theme';
 
 // Wave 11 — System Balance block for admin.
 // Shows: overloaded/idle/stuck counts · avg bids · global multiplier · efficiency.
@@ -54,7 +54,7 @@ export default function SystemBalance() {
         <View style={s.headLeft}>
           <View style={[s.pressureDot, { backgroundColor: pm.color }]} />
           <Text style={s.title}>System Balance</Text>
-          <View style={[s.pressurePill, { borderColor: pm.color + '77', backgroundColor: pm.color + '15' }]}>
+          <View style={[s.pressurePill, { borderColor: alpha(pm.color, 0.47), backgroundColor: alpha(pm.color, 0.08) }]}>
             <Ionicons name={pm.icon as any} size={11} color={pm.color} />
             <Text style={[s.pressureText, { color: pm.color }]}>{pm.label}</Text>
           </View>

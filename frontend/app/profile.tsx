@@ -9,7 +9,7 @@ import api from '../src/api';
 import { useMe } from '../src/use-me';
 import { useAuth } from '../src/auth';
 import { useT } from '../src/i18n';
-import T from '../src/theme';
+import T, { alpha } from '../src/theme';
 
 /**
  * L0 Profile — identity-first, not a debug screen.
@@ -127,7 +127,7 @@ export default function Profile() {
               disabled={isActive || !!switching}
               activeOpacity={0.85}
             >
-              <View style={[s.roleIcon, { backgroundColor: meta.color + '22' }]}>
+              <View style={[s.roleIcon, { backgroundColor: alpha(meta.color, 0.13) }]}>
                 <Ionicons name={meta.icon} size={18} color={meta.color} />
               </View>
               <View style={{ flex: 1 }}>

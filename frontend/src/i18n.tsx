@@ -522,10 +522,27 @@ const UK: Dict = {
 
 const DICTS: Record<LangCode, Dict> = { en: EN, ru: RU, uk: UK };
 
+// Reverse index: EN literal → key. Built once per process. Lets call-sites
+// translate hard-coded English strings without manually picking the key:
+//   <Text>{tByEn('Save')}</Text>
+// Whitespace is normalised so multi-line JSX literals match too.
+const normEn = (s: string) => (typeof s === 'string' ? s.trim().replace(/\s+/g, ' ') : s);
+const EN_REVERSE: Record<string, string> = (() => {
+  const out: Record<string, string> = {};
+  for (const [key, val] of Object.entries(EN)) {
+    if (typeof val !== 'string') continue;
+    const k = normEn(val);
+    // First-wins so the most-canonical key for a given literal sticks.
+    if (!(k in out)) out[k] = key;
+  }
+  return out;
+})();
+
 type I18nCtx = {
   lang: LangCode;
   setLang: (next: LangCode, opts?: { syncBackend?: boolean }) => Promise<void>;
   t: (key: string, fallback?: string) => string;
+  tByEn: (en: string) => string;
   langs: typeof LANGS;
 };
 
@@ -533,6 +550,7 @@ const I18nContext = createContext<I18nCtx>({
   lang: 'en',
   setLang: async () => {},
   t: (k, fb) => fb || k,
+  tByEn: (en) => en,
   langs: LANGS,
 });
 
@@ -563,7 +581,22 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     return dict[key] ?? EN[key] ?? fallback ?? key;
   }, [lang]);
 
-  const value = useMemo<I18nCtx>(() => ({ lang, setLang, t, langs: LANGS }), [lang, setLang, t]);
+  // tByEn — mirror of the web `tByEn` pattern. Translate by English literal
+  // lookup. Returns the input unchanged if no match (so hardcoded EN strings
+  // remain readable on en, and any unknown literal degrades gracefully).
+  const tByEn = useCallback((en: string) => {
+    if (typeof en !== 'string') return en;
+    if (lang === 'en') return en;
+    const key = EN_REVERSE[normEn(en)];
+    if (!key) return en;
+    const dict = DICTS[lang] || EN;
+    return dict[key] ?? en;
+  }, [lang]);
+
+  const value = useMemo<I18nCtx>(
+    () => ({ lang, setLang, t, tByEn, langs: LANGS }),
+    [lang, setLang, t, tByEn],
+  );
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }

@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import api from './api';
-import T from './theme';
+import T, { alpha } from './theme';
 
 // Wave 10 — Client Opportunity Feed
 // Shows expansion opportunities & speed upgrades with explicit "why now" + Accept / Dismiss.
@@ -108,7 +108,7 @@ export default function ClientOpportunityFeed({ compact }: { compact?: boolean }
         return (
           <View key={o.opportunity_id} style={[s.card, o.priority === 'high' && s.cardHigh]} testID={`opp-${o.opportunity_id}`}>
             <View style={s.cardHead}>
-              <View style={[s.typePill, { backgroundColor: tm.color + '22', borderColor: tm.color + '55' }]}>
+              <View style={[s.typePill, { backgroundColor: alpha(tm.color, 0.13), borderColor: alpha(tm.color, 0.33) }]}>
                 <Ionicons name={tm.icon as any} size={11} color={tm.color} />
                 <Text style={[s.typeText, { color: tm.color }]}>{tm.label}</Text>
               </View>

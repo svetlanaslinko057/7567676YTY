@@ -5,7 +5,7 @@ import { useAuth } from '../src/auth';
 import { useMe } from '../src/use-me';
 import { Ionicons } from '@expo/vector-icons';
 import api from '../src/api';
-import T from '../src/theme';
+import T, { alpha } from '../src/theme';
 
 /**
  * Gateway — welcome-экран выбора контекста.
@@ -117,7 +117,7 @@ export default function GatewayScreen() {
 
       {availableRoles.map(r => (
         <TouchableOpacity key={r.role} testID={`gateway-role-${r.role}`} style={s.roleCard} onPress={() => handleRole(r.role, r.route)}>
-          <View style={[s.iconWrap, { backgroundColor: r.color + '22' }]}>
+          <View style={[s.iconWrap, { backgroundColor: alpha(r.color, 0.13) }]}>
             <Ionicons name={r.icon} size={24} color={r.color} />
           </View>
           <View style={s.roleInfo}>

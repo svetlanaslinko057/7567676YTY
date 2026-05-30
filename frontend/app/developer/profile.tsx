@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { T } from '../../src/theme';
+import { T, alpha } from '../../src/theme';
 import { runtime } from '../../src/runtime';
 import { ApiError } from '../../src/runtime-client';
 import { useMe } from '../../src/use-me';
@@ -148,7 +148,7 @@ export default function DeveloperProfile() {
                 onPress={() => switchContext(r)}
                 disabled={!!switching}
               >
-                <View style={[s.rowIcon, { backgroundColor: `${meta.color}22` }]}>
+                <View style={[s.rowIcon, { backgroundColor: `${alpha(meta.color, 0.13)}` }]}>
                   <Ionicons name={meta.icon} size={18} color={meta.color} />
                 </View>
                 <View style={{ flex: 1 }}>

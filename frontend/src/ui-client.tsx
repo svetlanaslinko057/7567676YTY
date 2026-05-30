@@ -7,7 +7,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import T from './theme';
+import T, { alpha } from './theme';
 import { PressScale } from './ui';
 
 /* --------------------------------------------------------- ScreenTitle */
@@ -127,8 +127,8 @@ export function Avatar({ initial, size = 64, color = T.info }: {
   return (
     <View style={{
       width: size, height: size, borderRadius: size / 2,
-      backgroundColor: color + '22',
-      borderWidth: 1, borderColor: color + '44',
+      backgroundColor: alpha(color, 0.13),
+      borderWidth: 1, borderColor: alpha(color, 0.27),
       alignItems: 'center', justifyContent: 'center',
     }}>
       <Text style={{ color, fontSize: size * 0.42, fontWeight: '800' }}>{initial}</Text>
@@ -245,7 +245,7 @@ export function Banner({
   return (
     <View style={[bn.wrap, { backgroundColor: c.bg, borderColor: c.bd }]} testID={testID}>
       <View style={bn.headerRow}>
-        <View style={[bn.iconWrap, { backgroundColor: c.fg + '22' }]}>
+        <View style={[bn.iconWrap, { backgroundColor: alpha(c.fg, 0.13) }]}>
           <Ionicons name={icon} size={20} color={c.fg} />
         </View>
         <View style={bn.body}>
@@ -329,7 +329,7 @@ export function TimelineRow({
   const inner = (
     <View style={tr.row} testID={testID}>
       <View style={tr.spineWrap}>
-        <View style={[tr.dot, { backgroundColor: color, borderColor: color + '55' }]} />
+        <View style={[tr.dot, { backgroundColor: color, borderColor: alpha(color, 0.33) }]} />
         {!isLast ? <View style={tr.spine} /> : null}
       </View>
       <View style={tr.content}>

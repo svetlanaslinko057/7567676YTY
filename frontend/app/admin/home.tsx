@@ -13,7 +13,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import api from '../../src/api';
 import { useRealtime } from '../../src/realtime';
-import T from '../../src/theme';
+import T, { alpha } from '../../src/theme';
 import TourStatsWidget from '../../src/admin-tour-stats-widget';
 
 type HomeResp = {
@@ -274,7 +274,7 @@ function AlertCard({
   const color = tone === 'danger' ? T.danger : tone === 'warn' ? T.risk : T.success;
   return (
     <TouchableOpacity
-      style={[s.alertCard, { borderColor: color + '55' }]}
+      style={[s.alertCard, { borderColor: alpha(color, 0.33) }]}
       onPress={onPress}
       disabled={!onPress}
       activeOpacity={0.85}

@@ -21,7 +21,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import api from '../src/api';
-import T from '../src/theme';
+import T, { alpha } from '../src/theme';
 import { StatusPill, EmptyState, SectionLabel } from '../src/ui-client';
 
 type Ticket = {
@@ -389,7 +389,7 @@ function ComposeTicket({ onClose, onSubmitted }: { onClose: () => void; onSubmit
                 <TouchableOpacity
                   key={p.key}
                   testID={`ticket-priority-${p.key}`}
-                  style={[c.chip, priority === p.key && { borderColor: p.color, backgroundColor: p.color + '14' }]}
+                  style={[c.chip, priority === p.key && { borderColor: p.color, backgroundColor: alpha(p.color, 0.08) }]}
                   onPress={() => setPriority(p.key)}
                   activeOpacity={0.8}
                 >
