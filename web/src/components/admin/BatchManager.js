@@ -135,6 +135,7 @@ const BatchSection = ({ title, batches, emptyMessage, onApprove, onMarkPaid, onB
 };
 
 const BatchManager = ({ batches = [], onApprove, onMarkPaid, onBatchClick }) => {
+  const { tByEn } = useLang();
   const draftBatches = batches.filter(b => b.status === 'draft');
   const approvedBatches = batches.filter(b => b.status === 'approved');
   const paidBatches = batches.filter(b => b.status === 'paid');

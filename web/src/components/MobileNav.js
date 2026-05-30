@@ -196,6 +196,7 @@ const BOTTOM_NAV = {
  * <MobileTopBar />
  * ============================================================================ */
 export function MobileTopBar({ onOpenDrawer, roleLabel }) {
+  const { tByEn } = useLang();
   return (
     <header className="m-topbar" data-testid="mobile-topbar">
       <div className="m-topbar__left">
@@ -221,6 +222,7 @@ export function MobileTopBar({ onOpenDrawer, roleLabel }) {
  * <MobileDrawer />
  * ============================================================================ */
 export function MobileDrawer({ open, onClose, role }) {
+  const { tByEn } = useLang();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();

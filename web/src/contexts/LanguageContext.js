@@ -23,6 +23,8 @@ const LanguageContext = createContext({
   languages: LANGS,
 });
 
+export { LanguageContext };
+
 export const useLang = () => useContext(LanguageContext);
 
 const resolveInitial = () => {

@@ -2,18 +2,32 @@
  * WEB-P5 — RootErrorBoundary
  *
  * Catches uncaught render errors anywhere in the React tree below.
- * Surfaces a HonestState-shaped error UI and logs the error to console
- * (where existing telemetry can pick it up).
+ * Surfaces a theme-aware error UI and logs the error to console.
  *
- * Wraps the AppRouter beneath AuthProvider so that auth context is
- * available, and beneath ToastProvider so the boundary can also
- * surface a toast on mount.
+ * Wrapped beneath LanguageProvider so it can render localised copy.
+ * Wrapped beneath AuthProvider so auth context is available.
+ * Wrapped beneath ToastProvider so the boundary can also surface a toast.
  */
 import { Component } from 'react';
 import { WifiOff, RotateCcw } from 'lucide-react';
-import { useLang } from '@/contexts/LanguageContext';
+import { LanguageContext } from '@/contexts/LanguageContext';
+
+const STR = {
+  en: {
+    title: 'Something went wrong',
+    body: 'The page crashed unexpectedly. The error has been logged.',
+    retry: 'Reload page',
+  },
+  uk: {
+    title: 'Сталася помилка',
+    body: 'Сторінка несподівано аварійно завершилася. Помилку зафіксовано.',
+    retry: 'Перезавантажити сторінку',
+  },
+};
 
 class RootErrorBoundary extends Component {
+  static contextType = LanguageContext;
+
   constructor(props) {
     super(props);
     this.state = { hasError: false, error: null };
@@ -43,42 +57,111 @@ class RootErrorBoundary extends Component {
   };
 
   render() {
-    if (this.state.hasError) {
-      return (
+    if (!this.state.hasError) return this.props.children;
+
+    const lang = (this.context && this.context.lang) || 'en';
+    const s = STR[lang] || STR.en;
+
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: 'var(--token-bg, #FAFAF7)',
+          color: 'var(--token-text-primary, #1A1A1A)',
+          padding: 24,
+        }}
+        data-testid="root-error-boundary"
+      >
         <div
-          className="min-h-screen flex items-center justify-center bg-[var(--t-bg)] text-white p-6"
-          data-testid="root-error-boundary"
+          style={{
+            maxWidth: 440,
+            width: '100%',
+            padding: 32,
+            borderRadius: 20,
+            border: '1px solid var(--token-border, rgba(0,0,0,0.08))',
+            background: 'var(--token-surface, #FFFFFF)',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.06)',
+          }}
         >
-          <div className="max-w-md w-full p-8 rounded-2xl border border-border bg-[var(--t-surface-raised)]">
-            <div className="flex flex-col items-center text-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
-                <WifiOff className="w-7 h-7 text-red-400" />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold mb-1">Something went wrong</h2>
-                <p className="text-sm text-muted-foreground">
-                  The page crashed unexpectedly. The error has been logged.
-                </p>
-                {this.state.error?.message && (
-                  <p className="mt-3 text-xs font-mono text-muted-foreground bg-muted/40 rounded-lg p-2 break-words">
-                    {this.state.error.message}
-                  </p>
-                )}
-              </div>
-              <button
-                onClick={this.handleRetry}
-                className="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-signal/15 border border-signal/30 text-signal text-sm font-medium hover:bg-signal/25 transition"
-                data-testid="root-error-retry"
-              >
-                <RotateCcw className="w-4 h-4" />
-                Reload page
-              </button>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 16 }}>
+            <div
+              style={{
+                width: 56,
+                height: 56,
+                borderRadius: 16,
+                background: 'var(--token-danger-tint, rgba(220, 38, 38, 0.08))',
+                border: '1px solid var(--token-danger-border, rgba(220, 38, 38, 0.20))',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <WifiOff style={{ width: 26, height: 26, color: 'var(--token-danger, #DC2626)' }} />
             </div>
+            <div>
+              <h2
+                style={{
+                  fontSize: 20,
+                  fontWeight: 600,
+                  marginBottom: 6,
+                  color: 'var(--token-text-primary, #1A1A1A)',
+                }}
+              >
+                {s.title}
+              </h2>
+              <p style={{ fontSize: 14, color: 'var(--token-text-secondary, #4A4A4A)', lineHeight: 1.5 }}>
+                {s.body}
+              </p>
+              {this.state.error?.message && (
+                <p
+                  style={{
+                    marginTop: 12,
+                    fontSize: 12,
+                    fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+                    color: 'var(--token-text-tertiary, #6A6A6A)',
+                    background: 'var(--token-surface-elevated, rgba(0,0,0,0.04))',
+                    borderRadius: 8,
+                    padding: '8px 10px',
+                    wordBreak: 'break-word',
+                    textAlign: 'left',
+                  }}
+                >
+                  {this.state.error.message}
+                </p>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={this.handleRetry}
+              style={{
+                marginTop: 8,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: '10px 18px',
+                borderRadius: 10,
+                background: 'var(--token-primary, #2EBF6F)',
+                color: '#FFFFFF',
+                border: 'none',
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'opacity 120ms ease',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.92'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = '1'; }}
+              data-testid="root-error-retry"
+            >
+              <RotateCcw style={{ width: 16, height: 16 }} />
+              {s.retry}
+            </button>
           </div>
         </div>
-      );
-    }
-    return this.props.children;
+      </div>
+    );
   }
 }
 

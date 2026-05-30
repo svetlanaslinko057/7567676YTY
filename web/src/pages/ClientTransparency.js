@@ -424,6 +424,7 @@ function PortfolioCard({ count, progress }) {
 
 /* ---------- ACTIVITY -------------------------------------------------------- */
 function ActivityCard({ activity }) {
+  const { tByEn } = useLang();
   if (!activity || activity.length === 0) {
     return (
       <EmptyState

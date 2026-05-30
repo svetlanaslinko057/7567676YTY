@@ -33,6 +33,7 @@ const KPICard = ({ icon: Icon, label, amount, count, variant = 'default', subtex
 };
 
 const FinancialControlHeader = ({ overview }) => {
+  const { tByEn } = useLang();
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
       <KPICard

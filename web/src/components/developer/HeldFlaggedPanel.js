@@ -53,6 +53,7 @@ const FlaggedCard = ({ earning }) => {
 };
 
 const HeldFlaggedPanel = ({ held = [], flagged = [] }) => {
+  const { tByEn } = useLang();
   const hasIssues = held.length > 0 || flagged.length > 0;
 
   if (!hasIssues) {

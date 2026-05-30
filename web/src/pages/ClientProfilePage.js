@@ -369,6 +369,7 @@ function StatCard({ label, value, accent, testid }) {
 }
 
 function Field({ label, icon, value, onChange, editing, placeholder, testid }) {
+  const { tByEn } = useLang();
   return (
     <div>
       <p className="text-[11px] uppercase tracking-wider text-muted-foreground font-semibold mb-1.5 flex items-center gap-1.5">{icon} {label}</p>

@@ -215,6 +215,7 @@ function StepHeader({ step }) {
 }
 
 function Step1({ profile, setProfile, valid, onNext }) {
+  const { tByEn } = useLang();
   const set = (k) => (e) => setProfile({ ...profile, [k]: e.target.value });
   return (
     <div>
@@ -260,6 +261,7 @@ function Field({ label, value, onChange, testId, multiline }) {
 }
 
 function Step2({ contract, html, onBack, onNext }) {
+  const { tByEn } = useLang();
   return (
     <div>
       <h1 className="text-2xl font-extrabold mb-2">{tByEn('Review agreement')}</h1>
@@ -285,6 +287,7 @@ function Step2({ contract, html, onBack, onNext }) {
 }
 
 function Step3({ acks, setAcks, allAcked, submitting, onBack, onNext }) {
+  const { tByEn } = useLang();
   const toggle = (k) => () => setAcks({ ...acks, [k]: !acks[k] });
   const items = [
     { k: 'legal_details_correct', label: 'I confirm my legal details are correct.' },
@@ -382,6 +385,7 @@ function Step4({ otpCode, setOtpCode, otpMeta, submitting, onBack, onConfirm, on
 }
 
 function Step5({ contract, onPay, onDocs }) {
+  const { tByEn } = useLang();
   return (
     <div data-testid="contract-signed">
       <div className="bg-card border border-border rounded-2xl p-8 mb-6">

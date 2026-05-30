@@ -19,6 +19,7 @@ const SeverityBadge = ({ severity }) => {
 };
 
 const HeldEarningCard = ({ earning, onOpenQA }) => {
+  const { tByEn } = useLang();
   const revisionCost = (earning.revision_hours || 0) * 20; // Assuming $20/hr avg
   const estimatedLoss = revisionCost;
 
@@ -74,6 +75,7 @@ const HeldEarningCard = ({ earning, onOpenQA }) => {
 };
 
 const HeldQueue = ({ heldEarnings = [], onOpenQA }) => {
+  const { tByEn } = useLang();
   const totalHeld = heldEarnings.reduce((sum, e) => sum + (e.final_earning || 0), 0);
   const totalRevisionCost = heldEarnings.reduce((sum, e) => ((e.revision_hours || 0) * 20), 0);
 

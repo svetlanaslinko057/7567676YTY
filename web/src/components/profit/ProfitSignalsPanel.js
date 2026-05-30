@@ -58,6 +58,7 @@ const SignalCard = ({ severity, title, message, metric, onAction, actionLabel })
 };
 
 const ProfitSignalsPanel = ({ signals = [], onNavigate }) => {
+  const { tByEn } = useLang();
   if (signals.length === 0) {
     return (
       <div className="p-8 rounded-lg border border-[var(--border-admin)] bg-[var(--surface-admin-1)] text-center">

@@ -332,6 +332,7 @@ const StatCard = ({ label, value, color, highlight }) => {
 };
 
 const BoardColumn = ({ column, units, onOpenUnit, onStartWork }) => {
+  const { tByEn } = useLang();
   const { setNodeRef } = useSortable({ id: column.id, data: { type: 'column' } });
   
   const colors = {

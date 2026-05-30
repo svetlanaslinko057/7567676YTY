@@ -20,6 +20,7 @@ const InsightCard = ({ icon: Icon, title, variant = 'default' }) => {
 };
 
 const EarningsInsights = ({ summary, held, flagged }) => {
+  const { tByEn } = useLang();
   const insights = [];
 
   // Generate insights based on data

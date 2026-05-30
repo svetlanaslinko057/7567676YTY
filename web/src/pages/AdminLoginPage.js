@@ -302,6 +302,7 @@ const Divider = ({ label }) => (
 // ----- Visual side animation -----
 
 const AdminFlowAnimation = () => {
+  const { tByEn } = useLang();
   // WEB-P1.6: removed hardcoded marketing literals (`24` / `12` / `$48.2K`).
   // Login surface is a marketing visual, not a data view — show neutral
   // operational labels instead. Real data lives at /admin/dashboard.

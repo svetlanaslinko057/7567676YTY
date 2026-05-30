@@ -62,6 +62,7 @@ const RiskSignalsPanel = ({
   approvedBatchesNotPaid,
   onNavigate
 }) => {
+  const { tByEn } = useLang();
   const signals = [];
 
   // Generate signals from data

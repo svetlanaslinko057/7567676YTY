@@ -30,6 +30,7 @@ const KPICard = ({ label, value, subtitle, icon: Icon, variant = 'default' }) =>
 };
 
 const ProfitHeader = ({ overview }) => {
+  const { tByEn } = useLang();
   const revenue = overview?.total_revenue || 0;
   const devCost = overview?.total_dev_cost || 0;
   const revisionCost = overview?.total_revision_cost || 0;

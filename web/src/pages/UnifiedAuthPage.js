@@ -228,6 +228,7 @@ const UnifiedAuthPage = () => {
   };
 
   const handleGoogleError = () => {
+    const { tByEn } = useLang();
     setError(tByEn('Google sign-in was cancelled or blocked by the browser'));
   };
 

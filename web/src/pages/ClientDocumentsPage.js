@@ -150,6 +150,7 @@ function EmptyCard({ icon, text }) {
 }
 
 function ContractCard({ c, expanded, evidence, onToggle }) {
+  const { tByEn } = useLang();
   const pdfAvailable = c.pdf_status === 'generated';
   const htmlUrl = `/api/contracts/${c.contract_id}/html`;
   return (

@@ -313,6 +313,7 @@ export default function AdminExecutionIntelligence() {
 
 /* ─── Header — conviction band + 24h pulse ──────────────────────────────── */
 function Header({ conviction, suppressions, decisions24h, onRefresh, lastTick }) {
+  const { tByEn } = useLang();
   const band = conviction?.band || 'forming';
   const bs = bandStyle(band);
   const Icon = bs.icon;
@@ -432,6 +433,7 @@ const Pulse = ({ label, value, color, icon: Icon }) => (
 
 /* ─── LEFT — live flow stream ──────────────────────────────────────────── */
 function LiveFlowPanel({ pipeline, stream, decisions24h, selected, onSelect }) {
+  const { tByEn } = useLang();
   const buckets = [
     { key: 'open',        label: 'Open',        icon: CircuitBoard, color: 'var(--t-warning)' },
     { key: 'evaluating',  label: 'Evaluating',  icon: Workflow,     color: 'var(--t-signal)' },
@@ -524,6 +526,7 @@ function LiveFlowPanel({ pipeline, stream, decisions24h, selected, onSelect }) {
 
 /* ─── CENTER — module cognition (WHY) + timeline ribbon ────────────────── */
 function CognitionPanel({ why, timeline, selected }) {
+  const { tByEn } = useLang();
   if (!selected) {
     return (
       <Card className="p-6 h-full flex items-center justify-center min-h-[400px]" testid="cognition-empty">
@@ -649,6 +652,7 @@ const PHASE_META = {
   rejected:        { label: 'Rejected',        icon: ShieldOff,   band: 'collapsing' } };
 
 function TimelineRibbon({ timeline }) {
+  const { tByEn } = useLang();
   if (!timeline) {
     return (
       <div className="mt-4">
@@ -784,6 +788,7 @@ const DriverRow = ({ d }) => {
 
 /* ─── RIGHT — Parallel Universes ───────────────────────────────────────── */
 function UniversesPanel({ universes, selected }) {
+  const { tByEn } = useLang();
   if (!selected) {
     return (
       <Card className="p-6 h-full flex items-center justify-center min-h-[400px]" testid="universes-empty">
@@ -914,6 +919,7 @@ const UniverseCard = ({ kicker, kickerColor, title, subtitle, eta, risk,
 
 /* ─── BOTTOM — Suppression feed (the moat) ─────────────────────────────── */
 function SuppressionsPanel({ data, overrides, onOverride }) {
+  const { tByEn } = useLang();
   // Filter out suppressions that have been overridden — single source of truth.
   const overriddenActionIds = new Set(
     (overrides?.items || []).map((ov) => ov.action_id)
@@ -1000,6 +1006,7 @@ function SuppressionsPanel({ data, overrides, onOverride }) {
 
 /* ─── Override modal — P2.2 ────────────────────────────────────────────── */
 function OverrideModal({ target, onClose, onSubmitted }) {
+  const { tByEn } = useLang();
   const [reason, setReason] = useState('');
   const [acknowledged, setAcknowledged] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -1177,6 +1184,7 @@ function OverrideModal({ target, onClose, onSubmitted }) {
 
 /* ─── BOTTOM — AI memory (with override attribution chain) ─────────────── */
 function MemoryPanel({ data, overrides }) {
+  const { tByEn } = useLang();
   const ovItems = (overrides?.items) || [];
   const memItems = (data?.decisions) || [];
   const hasAny = ovItems.length > 0 || memItems.length > 0;

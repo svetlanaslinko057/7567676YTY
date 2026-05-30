@@ -20,6 +20,7 @@ const PipelineStage = ({ icon: Icon, label, amount, count, isActive }) => {
 };
 
 const EarningsPipeline = ({ summary }) => {
+  const { tByEn } = useLang();
   const stages = [
     {
       icon: Clock,

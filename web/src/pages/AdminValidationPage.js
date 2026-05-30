@@ -306,6 +306,7 @@ export default function AdminValidationPage() {
 }
 
 function CreateCampaignForm({ projects, onClose, onCreated }) {
+  const { tByEn } = useLang();
   const [projectId, setProjectId] = useState('');
   const [goal, setGoal] = useState('mobile polish');
   const [maxV, setMaxV] = useState(3);

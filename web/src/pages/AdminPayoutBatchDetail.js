@@ -340,6 +340,7 @@ export default function AdminPayoutBatchDetail() {
 }
 
 function ItemTimeline({ item, events, loading }) {
+  const { tByEn } = useLang();
   if (loading) {
     return (
       <div className="flex items-center gap-2 text-xs text-token-muted">

@@ -558,6 +558,7 @@ function Header() {
 }
 
 function Footer() {
+  const { tByEn } = useLang();
   return (
     <footer className="border-t border-border" style={{ background: 'var(--token-surface)' }}>
       <div className="max-w-6xl mx-auto px-6 sm:px-10 py-8 text-xs text-muted-foreground flex justify-between items-center">

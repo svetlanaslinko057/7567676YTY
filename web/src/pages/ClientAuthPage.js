@@ -408,6 +408,7 @@ const ClientAuthPage = () => {
 
 // Animated Flow for Clients
 const ClientFlowAnimation = () => {
+  const { tByEn } = useLang();
   const [step, setStep] = useState(0);
   
   const steps = [

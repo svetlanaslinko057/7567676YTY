@@ -69,6 +69,7 @@ const TaskRow = ({ task, onClick }) => {
 };
 
 const TaskDetailSheet = ({ task, isOpen, onClose }) => {
+  const { tByEn } = useLang();
   if (!task) return null;
 
   return (
@@ -145,6 +146,7 @@ const TaskDetailSheet = ({ task, isOpen, onClose }) => {
 };
 
 const TaskEarningsTable = ({ tasks = [] }) => {
+  const { tByEn } = useLang();
   const [selectedTask, setSelectedTask] = useState(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 

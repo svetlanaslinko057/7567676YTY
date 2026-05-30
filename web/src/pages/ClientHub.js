@@ -297,6 +297,7 @@ const FeaturePill = ({ icon, text }) => (
 );
 
 const ProjectStatus = ({ status }) => {
+  const { tByEn } = useLang();
   const config = {
     discovery: { label: 'AI structuring...', color: 'text-signal', animate: true },
     scope: { label: tByEn('Scope ready'), color: 'text-signal' },
@@ -317,6 +318,7 @@ const ProjectStatus = ({ status }) => {
 };
 
 const ProjectProgress = ({ stage }) => {
+  const { tByEn } = useLang();
   const stages = ['discovery', 'scope', 'design', 'development', 'qa', 'delivery'];
   const currentIndex = stages.indexOf(stage) + 1;
   const progress = Math.round((currentIndex / stages.length) * 100);

@@ -329,6 +329,7 @@ const FieldInput = ({ testId, className = '', ...props }) => (
 );
 
 const WorkflowAnimation = () => {
+  const { tByEn } = useLang();
   const [currentLine, setCurrentLine] = useState(0);
   const codeLines = [
     { text: '// workflow.ts', dim: true },

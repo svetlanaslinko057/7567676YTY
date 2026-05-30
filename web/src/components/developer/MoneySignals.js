@@ -49,6 +49,7 @@ const SignalCard = ({ severity, title, description, action }) => {
 };
 
 const MoneySignals = ({ held, flagged, batches }) => {
+  const { tByEn } = useLang();
   const signals = [];
 
   // Generate signals from data

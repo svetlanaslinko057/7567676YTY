@@ -106,6 +106,7 @@ function TabBtn({ id, active, setTab, children, Icon }) {
  * ================================================================= */
 
 function CasesTab() {
+  const { tByEn } = useLang();
   const [cases, setCases] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -205,6 +206,7 @@ function CasesTab() {
 }
 
 function CaseCard({ c, onEdit, onDelete, onToggle }) {
+  const { tByEn } = useLang();
   const status = STATUS_OPTIONS.find((s) => s.value === c.status) || STATUS_OPTIONS[0];
   const toneClass = {
     success: 'bg-emerald-500/15 text-emerald-400',
@@ -494,6 +496,7 @@ function InquiryRow({ inq, onStatus, onDelete }) {
  * ================================================================= */
 
 function CaseEditorModal({ mode, initial, onClose, onSave }) {
+  const { tByEn } = useLang();
   const [form, setForm] = useState(() => ({
     ...emptyForm,
     ...initial,

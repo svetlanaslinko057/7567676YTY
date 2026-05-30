@@ -20,6 +20,7 @@ const ConfidenceBadge = ({ score }) => {
 };
 
 const FlaggedEarningCard = ({ earning, onReview }) => {
+  const { tByEn } = useLang();
   const confidenceScore = earning.confidence_score || 0;
   const manualRatio = earning.manual_ratio || 0;
 
@@ -91,6 +92,7 @@ const FlaggedEarningCard = ({ earning, onReview }) => {
 };
 
 const FlaggedQueue = ({ flaggedEarnings = [], onReview }) => {
+  const { tByEn } = useLang();
   const totalFlagged = flaggedEarnings.reduce((sum, e) => sum + (e.final_earning || 0), 0);
   const avgConfidence = flaggedEarnings.length > 0
     ? flaggedEarnings.reduce((sum, e) => sum + (e.confidence_score || 0), 0) / flaggedEarnings.length

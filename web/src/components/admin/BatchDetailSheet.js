@@ -27,6 +27,7 @@ const StatusBadge = ({ status }) => {
 };
 
 const BatchDetailSheet = ({ batch, isOpen, onClose }) => {
+  const { tByEn } = useLang();
   if (!batch) return null;
 
   const lowConfidenceEarnings = batch.earnings_snapshot?.filter(e => (e.confidence_score || 0) < 0.7) || [];

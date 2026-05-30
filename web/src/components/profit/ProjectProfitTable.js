@@ -71,6 +71,7 @@ const ProjectRow = ({ project, onClick }) => {
 };
 
 const ProjectProfitTable = ({ projects = [], onSelectProject }) => {
+  const { tByEn } = useLang();
   const [sortField, setSortField] = useState('margin_percent');
   const [sortDirection, setSortDirection] = useState('asc'); // asc = worst first
 

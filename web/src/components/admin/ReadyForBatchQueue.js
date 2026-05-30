@@ -133,6 +133,7 @@ const DeveloperRow = ({ developer, onCreateBatch }) => {
 };
 
 const ReadyForBatchQueue = ({ developers = [], onCreateBatch }) => {
+  const { tByEn } = useLang();
   if (developers.length === 0) {
     return (
       <div className="rounded-xl border border-border bg-surface p-12 text-center">

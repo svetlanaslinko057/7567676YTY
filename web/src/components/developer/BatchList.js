@@ -38,6 +38,7 @@ const BatchCard = ({ batch }) => {
 };
 
 const BatchList = ({ batches = [] }) => {
+  const { tByEn } = useLang();
   if (batches.length === 0) {
     return (
       <div className="bg-surface rounded-xl border border-border p-8 text-center">

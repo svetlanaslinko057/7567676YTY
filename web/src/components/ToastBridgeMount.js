@@ -18,14 +18,36 @@
  */
 import { useEffect, useRef } from 'react';
 import { useToast } from './Toast';
+import { useLang } from '@/contexts/LanguageContext';
 
 const TOAST_THROTTLE_MS = 4000;
 
+const TOAST_STR = {
+  en: {
+    network: 'Network error',
+    network_desc: 'Could not reach server',
+    server: (code) => `Server error (${code})`,
+    rejected: (code) => `Request rejected (${code})`,
+    crashed: 'Page crashed',
+    crashed_desc: 'An unexpected error occurred. Reload the page.',
+  },
+  uk: {
+    network: 'Помилка мережі',
+    network_desc: 'Сервер недоступний',
+    server: (code) => `Помилка сервера (${code})`,
+    rejected: (code) => `Запит відхилено (${code})`,
+    crashed: 'Сторінка аварійно завершилася',
+    crashed_desc: 'Сталася неочікувана помилка. Перезавантажте сторінку.',
+  },
+};
+
 export default function ToastBridgeMount() {
   const { toast } = useToast();
+  const { lang } = useLang();
   const lastShownAt = useRef({});
 
   useEffect(() => {
+    const s = TOAST_STR[lang] || TOAST_STR.en;
     const throttle = (key) => {
       const now = Date.now();
       const last = lastShownAt.current[key] || 0;
@@ -48,13 +70,13 @@ export default function ToastBridgeMount() {
 
       const reqId = detail.request_id ? ` · ${String(detail.request_id).slice(0, 8)}` : '';
       if (status === 0) {
-        toast.error('Network error', { description: `Could not reach server${reqId}` });
+        toast.error(s.network, { description: `${s.network_desc}${reqId}` });
       } else if (status >= 500) {
-        toast.error(`Server error (${status})`, {
+        toast.error(s.server(status), {
           description: `${detail.message || code}${reqId}`,
         });
       } else if (status >= 400) {
-        toast.warning(`Request rejected (${status})`, {
+        toast.warning(s.rejected(status), {
           description: `${detail.message || code}${reqId}`,
         });
       }
@@ -63,8 +85,8 @@ export default function ToastBridgeMount() {
     const onRenderError = (ev) => {
       const detail = ev.detail || {};
       if (!throttle('render-error')) return;
-      toast.error('Page crashed', {
-        description: detail.message || 'An unexpected error occurred. Reload the page.',
+      toast.error(s.crashed, {
+        description: detail.message || s.crashed_desc,
       });
     };
 
@@ -74,7 +96,7 @@ export default function ToastBridgeMount() {
       window.removeEventListener('runtime:request_failed', onRequestFailed);
       window.removeEventListener('runtime:render_error', onRenderError);
     };
-  }, [toast]);
+  }, [toast, lang]);
 
   return null;
 }

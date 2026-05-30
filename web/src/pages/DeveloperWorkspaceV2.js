@@ -42,6 +42,7 @@ export default function DeveloperWorkspaceV2() {
   };
 
   const getLoadBadge = (status) => {
+    const { tByEn } = useLang();
     const badges = {
       available: { label: '🟢 ' + tByEn('Available'), className: 'bg-green-500' },
       optimal: { label: '🟡 ' + tByEn('Optimal'), className: 'bg-yellow-500' },

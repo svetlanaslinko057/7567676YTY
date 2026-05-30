@@ -397,6 +397,7 @@ const DeveloperGrowthPage = () => {
 /* ========== LEADERBOARD PANEL ========== */
 
 const LeaderboardPanel = ({ leaderboard, currentUserId }) => {
+  const { tByEn } = useLang();
   const top = leaderboard?.top || [];
   const me = leaderboard?.me;
   const totalParticipants = leaderboard?.total_participants || 0;

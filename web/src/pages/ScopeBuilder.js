@@ -463,6 +463,7 @@ const StatCard = ({ title, value, icon: Icon, color }) => {
 };
 
 const KanbanColumn = ({ title, icon: Icon, items, color, onAssign, onReview }) => {
+  const { tByEn } = useLang();
   const colors = {
     zinc: { border: 'border-zinc-800/30', badge: 'bg-zinc-500/20 text-zinc-400', icon: 'text-zinc-400' },
     blue: { border: 'border-signal/30', badge: 'bg-signal/20 text-signal', icon: 'text-signal' },
@@ -591,6 +592,7 @@ const Modal = ({ title, children, onClose }) => (
 );
 
 const ReviewModal = ({ unitId, onClose, onReview }) => {
+  const { tByEn } = useLang();
   const [unit, setUnit] = useState(null);
   const [feedback, setFeedback] = useState('');
   const [loading, setLoading] = useState(true);

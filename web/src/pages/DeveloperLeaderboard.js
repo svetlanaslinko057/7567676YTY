@@ -50,6 +50,7 @@ export default function DeveloperLeaderboard() {
   };
 
   const renderLeaderboard = (list, type, icon) => {
+    const { tByEn } = useLang();
     if (!list || list.length === 0) {
       return (
         <div className="p-12 text-center border border-dashed border-border rounded-xl bg-muted">

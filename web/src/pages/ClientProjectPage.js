@@ -439,6 +439,7 @@ const ClientProjectPage = () => {
 
 // ============ DELIVERABLE CARD ============
 const DeliverableCard = ({ deliverable, onRefresh }) => {
+  const { tByEn } = useLang();
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
   const [approving, setApproving] = useState(false);
@@ -740,6 +741,7 @@ const DeliverableCard = ({ deliverable, onRefresh }) => {
 
 // ============ PRODUCTION WORKSPACE ============
 const ProductionWorkspace = ({ workspace, project }) => {
+  const { tByEn } = useLang();
   if (!workspace && !project?.project_id) {
     // No data yet - show placeholder
     return (
@@ -918,6 +920,7 @@ const ProductionWorkspace = ({ workspace, project }) => {
 
 // ============ AI ESTIMATE BLOCK ============
 const AIEstimateBlock = ({ analysis }) => {
+  const { tByEn } = useLang();
   if (!analysis) return null;
   
   const estimate = analysis?.estimate || analysis;
@@ -1009,6 +1012,7 @@ const CurrentStateBlock = ({
   setRejectReason,
   handleRequestChanges
 }) => {
+  const { tByEn } = useLang();
   const proposal = project?.proposal;
 
   // IDEA SUBMITTED

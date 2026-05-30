@@ -97,6 +97,7 @@ const SevDot = ({ severity, title }) => (
 
 /* ─── node card ────────────────────────────────────────────────────────── */
 function PressureNode({ node, onOpen }) {
+  const { tByEn } = useLang();
   const band = BAND_META[node.band] || BAND_META.quiet;
   const dom = node.dominant_driver;
   return (
@@ -155,6 +156,7 @@ function PressureNode({ node, onOpen }) {
 
 /* ─── one swimlane ─────────────────────────────────────────────────────── */
 function Swimlane({ lane }) {
+  const { tByEn } = useLang();
   const meta = BAND_META[lane.band] || BAND_META.quiet;
   const isEmpty = lane.count === 0;
   return (
